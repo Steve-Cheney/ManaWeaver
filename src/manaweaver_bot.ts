@@ -7,7 +7,7 @@ const client = new Client({
     intents: ["Guilds", "GuildMessages", "DirectMessages"],
 });
 
-client.once("ready", async () => {
+client.once("clientReady", async () => {
     console.log("Discord bot is ready! 🤖");
   
     const guildId = "988935944264613888"; // clip_board server

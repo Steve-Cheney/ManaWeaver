@@ -2,6 +2,7 @@ import {
     ChatInputCommandInteraction,
     EmbedBuilder,
     SlashCommandBuilder,
+    MessageFlags,
 } from "discord.js";
   
 /**
@@ -126,8 +127,6 @@ export async function execute(interaction: ChatInputCommandInteraction) {
     const setCode = interaction.options.getString("set_code")?.trim() ?? null;
     const setName = interaction.options.getString("set_name")?.trim() ?? null;
 
-    //await interaction.deferReply();
-
     const card = await fetchMostRecentPrinting(cardName, setCode, setName);
 
     if (!card) {
@@ -142,12 +141,13 @@ export async function execute(interaction: ChatInputCommandInteraction) {
             : "";
         await interaction.reply({
             content: `Couldn't find **${cardName}** on Scryfall${extra}.`,
-            ephemeral: true,
+            flags: MessageFlags.Ephemeral
         });
     return;
     }
-    await interaction.deferReply();
     
+    await interaction.deferReply();
+
     const imageUrl = getImageUrl(card);
 
     const meta: string[] = [];
