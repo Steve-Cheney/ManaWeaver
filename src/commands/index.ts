@@ -1,6 +1,6 @@
-import * as ping from "./ping";
-import * as card_image from "./card_image";
-import * as scry from "./scry";
+import * as ping from "./ping.js";
+import * as card_image from "./card_image.js";
+import * as scry from "./scry.js";
 
 export const commands = {
     ping,
