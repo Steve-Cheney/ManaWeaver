@@ -1,4 +1,7 @@
-# <img src="images/mw_logo.png" alt="ManaWeaver Logo" width="36" /> ManaWeaver
+<h1>
+    <img src="/images/mw_logo.png" alt="ManaWeaver Logo" width="36" style="vertical-align: middle;">
+    ManaWeaver
+</h1>
 
 **ManaWeaver** is a Discord bot for Magic: The Gathering players that lets you quickly **serch cards, view specific printings, see pricing, and jump straight to TCGplayer** — all powered by the Scryfall API.
 
