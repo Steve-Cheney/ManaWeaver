@@ -4,10 +4,10 @@ import {
     SlashCommandBuilder,
     MessageFlags,
 } from "discord.js";
-  
+
 /**
  * Scryfall types (minimal fields we use)
-*/
+ */
 type ScryfallCard = {
     name: string;
     scryfall_uri: string;
@@ -42,19 +42,19 @@ export const data = new SlashCommandBuilder()
             .setName("card_name")
             .setDescription("Card name (e.g. Lightning Bolt)")
             .setRequired(true)
-        )
+    )
     .addStringOption((opt) =>
         opt
             .setName("set_code")
             .setDescription("Optional set code (e.g. MH3, LTR)")
             .setRequired(false)
-        )
+    )
     .addStringOption((opt) =>
         opt
             .setName("set_name")
             .setDescription('Optional set name (e.g. "Ice Age")')
             .setRequired(false)
-        );
+    );
 
 function getImageUrl(card: ScryfallCard): string | undefined {
     // Normal single-faced card
@@ -85,7 +85,7 @@ function buildScryfallQuery(
     if (setCode && setCode.trim().length > 0) {
         parts.push(`set:${setCode.trim().toLowerCase()}`);
     }
-    
+
     // Quote set name for multi-word sets
     if (setName && setName.trim().length > 0) {
         parts.push(`set:"${setName.trim()}"`);
@@ -132,20 +132,20 @@ export async function execute(interaction: ChatInputCommandInteraction) {
     if (!card) {
         const extra =
             setCode || setName
-            ? ` (with filters: ${[
-                setCode ? `Set Code=${setCode}` : null,
-                setName ? `Set Name="${setName}"` : null,
-            ]
-            .filter(Boolean)
-            .join(", ")})`
-            : "";
+                ? ` (with filters: ${[
+                      setCode ? `Set Code=${setCode}` : null,
+                      setName ? `Set Name="${setName}"` : null,
+                  ]
+                      .filter(Boolean)
+                      .join(", ")})`
+                : "";
         await interaction.reply({
             content: `Couldn't find **${cardName}** on Scryfall${extra}.`,
-            flags: MessageFlags.Ephemeral
+            flags: MessageFlags.Ephemeral,
         });
-    return;
+        return;
     }
-    
+
     await interaction.deferReply();
 
     const imageUrl = getImageUrl(card);
