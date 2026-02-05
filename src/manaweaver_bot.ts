@@ -8,7 +8,7 @@ const client = new Client({
 });
 
 client.once("clientReady", async () => {
-    console.log("Discord bot is ready! 🤖");
+    console.log("ManaWeaver is ready!");
   
     const guildId = "988935944264613888"; // clip_board server
     await deployCommands({ guildId });
