@@ -10,19 +10,21 @@ const client = new Client({
 client.once("clientReady", async () => {
     console.log("ManaWeaver is ready!");
 
-    const guildId = "988935944264613888"; // clip_board server
-    await deployCommands({ guildId });
-});
-
-client.on("guildCreate", async (guild) => {
-    await deployCommands({ guildId: guild.id });
+    if (config.DEV_GUILD_ID) {
+        // DEV: instant command updates
+        await deployCommands({ guildId: config.DEV_GUILD_ID });
+    } else {
+        // PROD: usable in any server (may take up to ~1 hour to propagate)
+        await deployCommands();
+    }
 });
 
 client.on("interactionCreate", async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
-    const { commandName } = interaction;
-    if (commands[commandName as keyof typeof commands]) {
-        commands[commandName as keyof typeof commands].execute(interaction);
+
+    const handler = commands[interaction.commandName as keyof typeof commands];
+    if (handler) {
+        await handler.execute(interaction);
     }
 });
 
